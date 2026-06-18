@@ -19,13 +19,11 @@
 #include "inc/EMICBus.h"
 
 /* User Variables */
-uint32_t rpm = 0;
-uint32_t pos = 0;
+uint16_t rpm = 0;
 
 void onReset()
 {
     LEDs_Led2_blink(100, 200, 5);
-    pos = 0;
     Counter_Cnt1_setEdge(1);
     Counter_Cnt1_setTimeBase(2000, 'A');
     LEDs_Status_state(1);
@@ -35,7 +33,8 @@ void onReset()
 void Counter_Cnt1_onTimeBase(uint32_t count)
 {
     LEDs_Led2_blink(100, 101, 1);
-    rpm = 30 * count;
+    rpm = (uint16_t)(30 * count);
+    pI2C("RPM\t%u", rpm);
 }
 
 
